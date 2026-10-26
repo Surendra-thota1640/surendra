@@ -1,0 +1,18 @@
+resources:
+  jobs:
+    retailpulse_job:
+      name: retailpulse-job
+      tasks:
+        - task_key: bronze
+          notebook_task:
+            notebook_path: ./notebooks/02_bronze_stream
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          notebook_task:
+            notebook_path: ./notebooks/03_silver_stream
+        - task_key: gold
+          depends_on:
+            - task_key: silver
+          notebook_task:
+            notebook_path: ./notebooks/04_gold_metrics
